@@ -13,8 +13,8 @@ export class TicketController {
 	}
 
 	@Get()
-	findAll() {
-		return this.ticketService.findAll();
+	async findAll() {
+		return await this.ticketService.findAll();
 	}
 
 	@Get(':id')

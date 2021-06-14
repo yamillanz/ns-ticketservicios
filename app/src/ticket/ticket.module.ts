@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
+
+import { Ticket } from './entities/ticket.entity';
 import { TicketService } from './ticket.service';
 import { TicketController } from './ticket.controller';
 
 @Module({
-  controllers: [TicketController],
-  providers: [TicketService]
+	imports: [SequelizeModule.forFeature([Ticket])],
+	controllers: [TicketController],
+	providers: [TicketService]
 })
-export class TicketModule {}
+export class TicketModule { }
