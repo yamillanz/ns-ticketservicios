@@ -18,7 +18,7 @@ export class TicketService {
 		try {
 			return await this.ticketRepo.findAll();			
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 		// return `This action returns all ticket`;
 	}
