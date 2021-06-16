@@ -1,19 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
 import { TicketService } from './ticket.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 
 @Controller('ticket')
 export class TicketController {
-	constructor(private readonly ticketService: TicketService) { }
+
+	private readonly log: Logger = new Logger('ticket');
+
+	constructor(private readonly ticketService: TicketService,) { }
 
 	@Post()
 	create(@Body() createTicketDto: CreateTicketDto) {
+		this.log.debug(`create ticket`);
 		return this.ticketService.create(createTicketDto);
 	}
 
 	@Get()
 	async findAll() {
+		this.log.debug(`find all`);
 		return await this.ticketService.findAll();
 	}
 

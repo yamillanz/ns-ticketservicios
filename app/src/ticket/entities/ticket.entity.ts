@@ -8,52 +8,52 @@ export class Ticket extends Model<Ticket>{
 	@PrimaryKey
 	@AutoIncrement
 	@Column
-	idTicketServicio: number;
+	idTicketServicio?: number;
 
 	@CreatedAt
 	@Column
-	fechaAlta: Date;
+	fechaAlta?: Date;
 	
 	@UpdatedAt
-	updateAt:  Date;
+	updateAt?:  Date;
 
 	@Column
 	descripcion: string;
 
 	@Column
-	fechaRequerida: Date;
+	fechaRequerida?: Date;
 
 	@Column
-	fechaEstimada: Date;
+	fechaEstimada?: Date;
 
 	@Column
-	idEstadoActual: number;
+	idEstadoActual?: number;
 
 	@Column
-	estadoActual: string;
+	estadoActual?: string;
 
 	@Column
-	fechaEstadoActual: Date;
+	fechaEstadoActual?: Date;
 
 	@Column
 	justificacionEstadoActual: string;
 
 	@Column
-	idGerenciaOrigen: number;
+	idGerenciaOrigen?: number;
 	@Column
-	idGerenciaDestino: number;
+	idGerenciaDestino?: number;
 	@Column
-	idSegUsuario: number
+	idSegUsuario?: number
 	@Column
-	idServiciosGerencias: number
+	idServiciosGerencias?: number
 	@Column
-	idAssets: number;
+	idAssets?: number;
 	@Column
-	idSegUsuarioOrigen: number;
+	idSegUsuarioOrigen?: number;
 	@Column
-	idEnlace: number;
+	idEnlace?: number;
 	@Column
-	idSegUsuarioAsignado: number;
+	idSegUsuarioAsignado?: number;
 	@Column
 	idSolpedCompras: number;
 }

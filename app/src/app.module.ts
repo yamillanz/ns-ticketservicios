@@ -4,6 +4,7 @@ import { TicketModule } from './ticket/ticket.module';
 import { TrazaTicketModule } from './traza-ticket/traza-ticket.module';
 import { EncuestaModule } from './encuesta/encuesta.module';
 import { ComentariosModule } from './comentarios/comentarios.module';
+import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,7 +21,8 @@ import { Ticket } from './ticket/entities/ticket.entity';
 			database: 'intranet',
 			models: [Ticket],
 			// autoLoadModels: true,
-		})
+		}),
+		ConfigModule.forRoot(),
 	],
 	controllers: [AppController],
 	providers: [AppService],
