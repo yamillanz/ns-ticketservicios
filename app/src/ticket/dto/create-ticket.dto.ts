@@ -1,33 +1,28 @@
 import { IsAlphanumeric, IsBoolean, IsDate, IsEmpty, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateTicketDto {
-	// @PrimaryKey
-	// @AutoIncrement
-	// @Column
-	// idTicketServicio: number;
 
-	@IsDate()
-    @IsOptional()
-	fechaAlta?: Date;
-	
-	// @UpdatedAt
-	// updateAt:  Date;
+	// @IsDate()
+	// @IsOptional()
+	// fechaAlta?: Date;
+
 
 	@IsString()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	descripcion: string;
 
 	@IsDate()
-	fechaRequerida?: Date;
+	@IsNotEmpty()
+	fechaRequerida: Date;
 
 	@IsDate()
-	fechaEstimada?: Date;
+	fechaEstimada: Date;
 
 	@IsNumber()
-	idEstadoActual?: number;
+	idEstadoActual: number;
 
 	@IsString()
-	estadoActual?: string;
+	estadoActual: string;
 
 	@IsDate()
 	fechaEstadoActual?: Date;
@@ -35,24 +30,33 @@ export class CreateTicketDto {
 	@IsString()
 	justificacionEstadoActual?: string;
 
-	// @Column
-	// idGerenciaOrigen: number;
-	// @Column
-	// idGerenciaDestino: number;
-	// @Column
-	// idSegUsuario: number
-	// @Column
-	// idServiciosGerencias: number
-	// @Column
-	// idAssets: number;
-	// @Column
-	// idSegUsuarioOrigen: number;
-	// @Column
-	// idEnlace: number;
-	// @Column
-	// idSegUsuarioAsignado: number;
 	@IsNumber()
-    @IsNotEmpty()
-	idSolpedCompras: number;
+	@IsNotEmpty()
+	idGerenciaOrigen: number;
+	@IsNumber()
+	@IsNotEmpty()
+	idGerenciaDestino: number;
+
+	@IsNumber()
+	@IsNotEmpty()
+	idSegUsuario: number
+	@IsNumber()
+	idServiciosGerencias?: number
+	@IsNumber()
+	idAssets?: number;
+
+	@IsNumber()
+	idSegUsuarioOrigen?: number;
+	@IsNumber()
+	idEnlace?: number;
+	@IsNumber()
+	idSegUsuarioAsignado?: number;
+
+	@IsNumber()
+	@IsNotEmpty()
+	idSolpedCompras?: number;
+
+	@IsNumber()
+	estatus?: number;
 
 }

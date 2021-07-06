@@ -1,34 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
 import { TrazaTicketService } from './traza-ticket.service';
 import { CreateTrazaTicketDto } from './dto/create-traza-ticket.dto';
 import { UpdateTrazaTicketDto } from './dto/update-traza-ticket.dto';
 
 @Controller('traza-ticket')
 export class TrazaTicketController {
-  constructor(private readonly trazaTicketService: TrazaTicketService) {}
+	private readonly log: Logger = new Logger('trazas-ticket');
 
-  @Post()
-  create(@Body() createTrazaTicketDto: CreateTrazaTicketDto) {
-    return this.trazaTicketService.create(createTrazaTicketDto);
-  }
+	constructor(private readonly trazaTicketService: TrazaTicketService) { }
 
-  @Get()
-  findAll() {
-    return this.trazaTicketService.findAll();
-  }
+	@Post()
+	create(@Body() createTrazaTicketDto: CreateTrazaTicketDto) {
+		this.log.debug(`create trazas`);
+		return this.trazaTicketService.create(createTrazaTicketDto);
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.trazaTicketService.findOne(+id);
-  }
+	@Get()
+	findAll() {
+		return this.trazaTicketService.findAll();
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTrazaTicketDto: UpdateTrazaTicketDto) {
-    return this.trazaTicketService.update(+id, updateTrazaTicketDto);
-  }
+	@Get('/ticket/:idticket')
+	findAllWithTicket(@Param('idticket') id: string) {
+		this.log.debug(`find trazas from a ticket`);
+		return this.trazaTicketService.findAllforOneTicket(+id);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.trazaTicketService.remove(+id);
-  }
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.trazaTicketService.findOne(+id);
+	}
+
+	@Patch(':id')
+	update(@Param('id') id: string, @Body() updateTrazaTicketDto: UpdateTrazaTicketDto) {
+		return this.trazaTicketService.update(+id, updateTrazaTicketDto);
+	}
+
+	@Delete(':id')
+	remove(@Param('id') id: string) {
+		this.log.debug(`delete traza`);
+		return this.trazaTicketService.remove(+id);
+	}
 }

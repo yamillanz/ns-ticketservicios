@@ -1,5 +1,7 @@
-import { Options } from '@nestjs/common';
-import { AutoIncrement, Column, CreatedAt, Model, PrimaryKey, Table, UpdatedAt } from 'sequelize-typescript';
+import { EstadoTicket } from './../../estado-ticket/entities/estado-ticket.entity';
+
+import { TrazaTicket } from './../../traza-ticket/entities/traza-ticket.entity';
+import { AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, Default, HasMany, Model, PrimaryKey, Table, UpdatedAt } from 'sequelize-typescript';
 
 @Table({
 	tableName: 'ts_ticket_servicio'
@@ -9,51 +11,60 @@ export class Ticket extends Model<Ticket>{
 	@AutoIncrement
 	@Column
 	idTicketServicio?: number;
-
+	
 	@CreatedAt
 	@Column
 	fechaAlta?: Date;
 	
 	@UpdatedAt
 	updateAt?:  Date;
-
+	
 	@Column
 	descripcion: string;
-
+	
 	@Column
-	fechaRequerida?: Date;
-
+	fechaRequerida: Date;
+	
 	@Column
-	fechaEstimada?: Date;
-
+	fechaEstimada: Date;
+	
 	@Column
-	idEstadoActual?: number;
-
+	idEstadoActual: number;
+	
 	@Column
-	estadoActual?: string;
-
+	estadoActual: string;
+	
 	@Column
 	fechaEstadoActual?: Date;
-
+	
 	@Column
 	justificacionEstadoActual: string;
-
+	
 	@Column
-	idGerenciaOrigen?: number;
+	idGerenciaOrigen: number;
 	@Column
-	idGerenciaDestino?: number;
+	idGerenciaDestino: number;
 	@Column
-	idSegUsuario?: number
+	idSegUsuario: number
 	@Column
 	idServiciosGerencias?: number
 	@Column
 	idAssets?: number;
 	@Column
-	idSegUsuarioOrigen?: number;
+	idSegUsuarioOrigen: number;
 	@Column
 	idEnlace?: number;
 	@Column
 	idSegUsuarioAsignado?: number;
 	@Column
-	idSolpedCompras: number;
+	idSolpedCompras?: number;
+
+	@Default(1)
+	@Column
+	estatus: number
+	
+
+	@HasMany(() => TrazaTicket)
+	trazas : TrazaTicket[];
+
 }
