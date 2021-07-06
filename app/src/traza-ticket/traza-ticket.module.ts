@@ -1,4 +1,4 @@
-import { HttpModule, Module } from '@nestjs/common';
+import { forwardRef, HttpModule, Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { EstadoTicketModule } from './../estado-ticket/estado-ticket.module';
 
@@ -7,7 +7,7 @@ import { TrazaTicketService } from './traza-ticket.service';
 import { TrazaTicketController } from './traza-ticket.controller';
 
 @Module({
-	imports: [SequelizeModule.forFeature([TrazaTicket]), EstadoTicketModule, HttpModule],
+	imports: [SequelizeModule.forFeature([TrazaTicket]), HttpModule, forwardRef(() => EstadoTicketModule)],
 	controllers: [TrazaTicketController],
 	providers: [TrazaTicketService],
 	exports: [TrazaTicketService]

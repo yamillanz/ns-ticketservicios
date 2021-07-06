@@ -3,7 +3,7 @@ import { TrazaTicketService } from './traza-ticket.service';
 import { CreateTrazaTicketDto } from './dto/create-traza-ticket.dto';
 import { UpdateTrazaTicketDto } from './dto/update-traza-ticket.dto';
 
-@Controller('traza-ticket')
+@Controller('api/traza-ticket')
 export class TrazaTicketController {
 	private readonly log: Logger = new Logger('trazas-ticket');
 

@@ -1,7 +1,7 @@
 import { EstadoTicketService } from './../estado-ticket/estado-ticket.service';
 import { EstadoTicket } from './../estado-ticket/entities/estado-ticket.entity';
 import { TrazaTicket } from './entities/traza-ticket.entity';
-import { HttpService, Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, HttpService, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTrazaTicketDto } from './dto/create-traza-ticket.dto';
 import { UpdateTrazaTicketDto } from './dto/update-traza-ticket.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -12,9 +12,9 @@ export class TrazaTicketService {
 	private readonly URL_usuarios: string = process.env.URL_BACKEND;
 
 	constructor(
-		@InjectModel(TrazaTicket)
-		private readonly trazaRepo: typeof TrazaTicket,
-		private readonly svrEstadoTicket: EstadoTicketService,
+		@InjectModel(TrazaTicket) private readonly trazaRepo: typeof TrazaTicket,
+		@Inject(forwardRef(() => EstadoTicketService)) private readonly svrEstadoTicket: EstadoTicketService,
+		// private readonly svrEstadoTicket: EstadoTicketService,
 		private readonly http: HttpService
 	) { }
 
@@ -72,14 +72,18 @@ export class TrazaTicketService {
 		return `This action returns a #${id} trazaTicket`;
 	}
 
+	findUltimaTraza(idTicket: number): Promise<TrazaTicket> {
+		return this.trazaRepo.findOne({ where: { idTicketServicio: idTicket }, order: [[`fechaAlta`, "DESC"]], limit: 1 });
+	}
+
 	update(id: number, updateTrazaTicketDto: UpdateTrazaTicketDto) {
 		return `This action updates a #${id} trazaTicket`;
 	}
 
 	async remove(id: number) {
-		let updatedTrazas : TrazaTicket = await this.trazaRepo.findByPk(id);
+		let updatedTrazas: TrazaTicket = await this.trazaRepo.findByPk(id);
 		if (!updatedTrazas) {
-			throw new NotFoundException('traza no existe');			
+			throw new NotFoundException('traza no existe');
 		}
 
 		updatedTrazas.estatus = 0;

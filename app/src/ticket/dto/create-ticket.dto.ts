@@ -1,4 +1,4 @@
-import { IsAlphanumeric, IsBoolean, IsDate, IsEmpty, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsAlphanumeric, IsBoolean, IsEmpty, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateTicketDto {
 
@@ -11,12 +11,13 @@ export class CreateTicketDto {
 	@IsNotEmpty()
 	descripcion: string;
 
-	@IsDate()
+	@IsString()
 	@IsNotEmpty()
 	fechaRequerida: Date;
 
-	@IsDate()
-	fechaEstimada: Date;
+	@IsOptional()
+	@IsString()
+	fechaEstimada?: Date;
 
 	@IsNumber()
 	idEstadoActual: number;
@@ -24,7 +25,7 @@ export class CreateTicketDto {
 	@IsString()
 	estadoActual: string;
 
-	@IsDate()
+	@IsString()
 	fechaEstadoActual?: Date;
 
 	@IsString()
@@ -33,27 +34,33 @@ export class CreateTicketDto {
 	@IsNumber()
 	@IsNotEmpty()
 	idGerenciaOrigen: number;
+
 	@IsNumber()
 	@IsNotEmpty()
 	idGerenciaDestino: number;
 
 	@IsNumber()
 	@IsNotEmpty()
-	idSegUsuario: number
+	idSegUsuario: number;
 	@IsNumber()
-	idServiciosGerencias?: number
-	@IsNumber()
-	idAssets?: number;
-
+	idServiciosGerencias?: number;
+	
 	@IsNumber()
 	idSegUsuarioOrigen?: number;
+	
 	@IsNumber()
+	@IsOptional()
 	idEnlace?: number;
 	@IsNumber()
+	@IsOptional()
+	idAssets?: number;
+	
+	@IsNumber()
+	@IsOptional()
 	idSegUsuarioAsignado?: number;
 
+	@IsOptional()
 	@IsNumber()
-	@IsNotEmpty()
 	idSolpedCompras?: number;
 
 	@IsNumber()

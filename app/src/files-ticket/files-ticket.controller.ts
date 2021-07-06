@@ -6,7 +6,7 @@ import { FilesInterceptor } from '@nestjs/platform-express/multer';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
-@Controller('files-ticket')
+@Controller('api/files-ticket')
 export class FilesTicketController {
 	private log: Logger = new Logger();
 

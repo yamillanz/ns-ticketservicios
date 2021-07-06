@@ -3,7 +3,7 @@ import { TicketService } from './ticket.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 
-@Controller('ticket')
+@Controller('api/ticket')
 export class TicketController {
 
 	private readonly log: Logger = new Logger('ticket');

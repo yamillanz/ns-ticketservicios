@@ -33,7 +33,7 @@ export class TicketService {
 			return newTicket.save();
 		} catch (error) {
 			console.error(error);
-			return error;
+			return  error;
 		}
 	}
 

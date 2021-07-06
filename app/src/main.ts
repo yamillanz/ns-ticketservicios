@@ -4,9 +4,12 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
-		// {
-		// 	logger: true //[`error`, `warn`, `debug`, `verbose`]
-		// });
+
+	app.enableCors({
+		origin: [
+			'http://localhost:4200', // angular
+		],
+	});
 
 	app.useGlobalPipes(
 		new ValidationPipe({
