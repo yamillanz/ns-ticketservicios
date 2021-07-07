@@ -52,8 +52,9 @@ export class Ticket extends Model<Ticket>{
 	idAssets?: number;
 	@Column
 	idSegUsuarioOrigen: number;
-	@Column
-	idEnlace?: number;
+
+	
+
 	@Column
 	idSegUsuarioAsignado?: number;
 	@Column

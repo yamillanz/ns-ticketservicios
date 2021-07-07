@@ -45,6 +45,24 @@ export class EstadoTicketService {
 		return estadossiguientes;
 	}
 
+	async findForRecibios(idTicket: number, verificar: number) {
+		const trazaultima: TrazaTicket = await this.svrTraza.findUltimaTraza(idTicket);
+		const ultimoEstado: EstadoTicket = await this.estadoRepo.findByPk(trazaultima.idEstadoTicket);
+		const estadoAnular: EstadoTicket = await this.estadoRepo.findOne({ where: { orden: -10 } });
+		const estadosSiguientes: EstadoTicket[] = await this.estadoRepo.findAll({
+			where: {
+				orden: { [Op.or]: [ultimoEstado.orden + 1] }
+			}
+		});
+
+		if (ultimoEstado.idEstadoTicket === 1 && verificar === 1) { return [...estadosSiguientes, estadoAnular] };
+
+		if (ultimoEstado.idEstadoTicket === 1 && !verificar) { return [estadoAnular] };
+		if (ultimoEstado.idEstadoTicket === 5) { return [...estadosSiguientes] };
+
+		return [ultimoEstado, ...estadosSiguientes];
+	}
+
 	async findEstadosCurrentAndNext(idTicketServicio: number, aprobado: number) {
 		const trazaultima: TrazaTicket = await this.svrTraza.findUltimaTraza(idTicketServicio);
 		const ultimoEstado: EstadoTicket = await this.estadoRepo.findByPk(trazaultima.idEstadoTicket);

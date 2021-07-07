@@ -32,6 +32,12 @@ export class EstadoTicketController {
 		return this.estadoTicketService.findPorOrden(+idorden);
 	}
 
+	@Get('verrecibidos/:idTicket/:verificar')
+	findForRecibios(@Param('idTicket') idTicket: number, @Param('verificar') verificar: number) {
+		this.log.debug(`ver recibidos`);
+		return this.estadoTicketService.findForRecibios(+idTicket, +verificar);
+	}
+
 	@Get('estadossiguientes/:idTicket/:anular')
 	findEstadosNext(@Param('idTicket') idTicket: number, @Param('anular') anular : number) {
 		this.log.debug(`estados siguientes`);

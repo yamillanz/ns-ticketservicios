@@ -33,7 +33,7 @@ export class TicketService {
 			return newTicket.save();
 		} catch (error) {
 			console.error(error);
-			return  error;
+			return error;
 		}
 	}
 
@@ -143,13 +143,21 @@ export class TicketService {
 	}
 
 	async findAllEnviados(idGerencia: number): Promise<TicketDto[]> {
+		// "SELECT tickets.*,
+		//         (SELECT nombre FROM config_gerencias ger WHERE ger.idConfigGerencia = tickets.idGerenciaDestino) gerenciaDestino,
+		//         IF(tickets.idEstadoActual = 1 OR tickets.idEstadoActual = 2 OR tickets.idEstadoActual = 5, 0, 1) orden_mod
+		//         FROM ts_ticket_servicio tickets 
+		//             WHERE idGerenciaOrigen = $idgerencia
+		//             AND ((tickets.IdEstadoActual >= 1 and tickets.IdEstadoActual < 6) OR (tickets.IdEstadoActual = 10))
+		//             ORDER BY orden_mod, idEstadoActual ASC";
 		try {
 			let dtosRecibidos: TicketDto[] = [];
 			const recibidos = (await this.ticketRepo.findAll<Ticket>({
 				where: {
 					idGerenciaOrigen: idGerencia,
 					idEstadoActual: { [Op.or]: [10, { [Op.between]: [1, 5] }] }
-				}
+				},
+				order: [[`idTicketServicio`, `DESC`]]
 			}));
 
 			for (const ticket of recibidos) {
@@ -161,6 +169,7 @@ export class TicketService {
 				// newdto.orden = dataEstado.accion_adicional;
 				dtosRecibidos.push(newdto);
 			}
+			// return dtosRecibidos.sort((ticketa, ticketb) => ticketb.orden_mod - ticketa.orden_mod);
 			return dtosRecibidos;
 		} catch (error) {
 			console.error(error);
@@ -174,7 +183,8 @@ export class TicketService {
 			where: {
 				idGerenciaDestino: idGerencia,
 				idEstadoActual: { [Op.or]: [{ [Op.lte]: 0 }, { [Op.between]: [6, 9] }] }
-			}
+			},
+			order: []
 		});
 		for (const ticket of histRecibidos) {
 			let dtoticket: TicketDto = Object.assign({}, ticket.toJSON());
@@ -206,6 +216,7 @@ export class TicketService {
 		if (!updateTicket) {
 			throw new NotFoundException('Ticket no existe');
 		}
+		console.log("viene ", updateTicketDto);
 
 		try {
 			Object.assign(updateTicket, updateTicketDto);

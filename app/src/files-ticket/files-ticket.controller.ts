@@ -9,6 +9,7 @@ import { extname } from 'path';
 @Controller('api/files-ticket')
 export class FilesTicketController {
 	private log: Logger = new Logger();
+	private fileServer: string = process.env.FILESERVER;
 
 	// private readonly editFileName = (req, file, callback) => {
 	// 	const name = file.originalname.split('.')[0];
@@ -49,7 +50,7 @@ export class FilesTicketController {
 	@Post('upload')
 	@UseInterceptors(FilesInterceptor('files', 6, {
 		storage: diskStorage({
-			destination: process.env.FILESERVER,
+			destination: './uploads', //process.env.FILESERVER,
 			filename: (req, file, callback) => {
 				const name = file.originalname.split('.')[0];
 				const fileExtName = extname(file.originalname);
