@@ -15,16 +15,8 @@ import { FilesTicketModule } from './files-ticket/files-ticket.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
-const defaultOptions = {
-	dialect: 'mysql',
-	host: process.env.MYSQL_SERVER,
-	port: process.env.MYSQL_PORT,
-	username: process.env.MYSQL_USER,
-	password: '.4C3r04dm1n',
-	database: 'intranet',
-	synchronize: false,
-};
+import { Pregunta } from './encuesta/entities/pregunta.entity';
+import { Respuesta } from './encuesta/entities/respuesta.entity';
 
 @Module({
 	imports: [
@@ -33,12 +25,12 @@ const defaultOptions = {
 		SequelizeModule.forRootAsync({
 			useFactory: () => ({
 				dialect: 'mysql',
-				host: 'localhost',
+				host: process.env.MYSQL_SERVER,
 				port: 3306,
 				username: process.env.MYSQL_USER,
 				password: process.env.MYSQL_PW,
 				database: 'intranet',
-				models: [Ticket, TrazaTicket, EstadoTicket, FilesTicket],
+				models: [Ticket, TrazaTicket, EstadoTicket, FilesTicket, Pregunta, Respuesta],
 			}),
 			// models: [Ticket, TrazaTicket, EstadoTicket, FilesTicket],
 			//autoLoadModels: true,

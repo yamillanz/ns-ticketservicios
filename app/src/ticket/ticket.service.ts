@@ -124,7 +124,8 @@ export class TicketService {
 				where: {
 					idGerenciaDestino: idGerencia,
 					idEstadoActual: { [Op.or]: [10, { [Op.between]: [2, 5] }] }
-				}
+				},
+				order: [[`idEstadoActual`, `DESC`], [`idTicketServicio`, `DESC`]]
 			}));
 
 			for (const ticket of recibidos) {
@@ -133,9 +134,11 @@ export class TicketService {
 				newdto.gerenciaOrigen = (await this.http.get(this.URL_gerencias + `gerencias/${ticket.idGerenciaOrigen}`).toPromise()).data[0].nombre;
 				newdto.estado_actual_accion_adic = dataEstado.accion_adicional;
 				newdto.orden = dataEstado.accion_adicional;
+				newdto.orden_mod = +(await this.srvEstados.findOne(ticket.idEstadoActual)).orden;
 				dtosRecibidos.push(newdto);
 			}
-			return dtosRecibidos;
+			return dtosRecibidos.sort((tikA, tikB) => tikB.orden_mod - tikA.orden_mod || tikB.idTicketServicio - tikA.idTicketServicio);
+			// return dtosRecibidos;
 		} catch (error) {
 			console.error(error);
 			return error;
@@ -157,7 +160,7 @@ export class TicketService {
 					idGerenciaOrigen: idGerencia,
 					idEstadoActual: { [Op.or]: [10, { [Op.between]: [1, 5] }] }
 				},
-				order: [[`idTicketServicio`, `DESC`]]
+				order: [[`idEstadoActual`, `ASC`], [`idTicketServicio`, `DESC`]]
 			}));
 
 			for (const ticket of recibidos) {
@@ -216,7 +219,7 @@ export class TicketService {
 		if (!updateTicket) {
 			throw new NotFoundException('Ticket no existe');
 		}
-		console.log("viene ", updateTicketDto);
+		// console.log("viene ", updateTicketDto);
 
 		try {
 			Object.assign(updateTicket, updateTicketDto);

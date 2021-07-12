@@ -1,26 +1,85 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEncuestaDto } from './dto/create-encuesta.dto';
-import { UpdateEncuestaDto } from './dto/update-encuesta.dto';
+import { CreatePreguntaDto } from './dto/create-pregunta.dto';
+import { UpdatePreguntaDto } from './dto/update-pregunta.dto';
+import { CreateRespuestaDto } from './dto/create-respuesta.dto';
+import { UpdateRespuestaDto } from './dto/update-respuesta.dto';
+import { Pregunta } from './entities/pregunta.entity';
+import { Respuesta } from './entities/respuesta.entity';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class EncuestaService {
-  create(createEncuestaDto: CreateEncuestaDto) {
-    return 'This action adds a new encuesta';
-  }
+	//@InjectModel(TrazaTicket) private readonly trazaRepo: typeof TrazaTicket
+	constructor(
+		@InjectModel(Pregunta) private readonly preguntasRepo: typeof Pregunta,
+		@InjectModel(Respuesta) private readonly respuestasRepo: typeof Respuesta) { }
 
-  findAll() {
-    return `This action returns all encuesta`;
-  }
+	createPregunta(createPregunstaDto: CreatePreguntaDto) {
+		return 'This action adds a new encuesta';
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} encuesta`;
-  }
+	async createRespuesta(createRespuestaDto: CreateRespuestaDto) {
+		try {
+			let newRespuesta: Respuesta = new Respuesta();
+			Object.assign(newRespuesta, createRespuestaDto);
+			return await newRespuesta.save();
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
+	}
 
-  update(id: number, updateEncuestaDto: UpdateEncuestaDto) {
-    return `This action updates a #${id} encuesta`;
-  }
+	findAll() {
+		return `This action returns all encuesta`;
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} encuesta`;
-  }
+	async findAllPreguntasPorGerencia(idConfigGerencia: number) {
+		return await this.preguntasRepo.findAll({ where: { idConfigGerencia } })
+	}
+
+
+	async findRespuestasPorPregunta(idPregunta: number) {
+		try {
+			return await this.respuestasRepo.findAll({
+				where: { idPregunta },
+				include: { model: Pregunta }
+			})
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
+
+		// this.preguntasRepo.findAll({ where: { idPregunta } })
+	}
+
+	// $app->get('/api/respuestasserv/{idRefServicio}', function(Request $request, Response $response){
+	// 	$id = $request->getAttribute('idRefServicio');
+	// 	$consulta = "SELECT re.*,
+	// 				(SELECT descripcion FROM gen_preguntas_gerencias ger 
+	// 				WHERE ger.idPregunta = re.idPregunta) desc_pregunta
+	// 			 FROM gen_respuestas_valoracion re 
+	// 			 WHERE idRefServicio = $id";
+	async findRespuestaPorServicio(idRefServicio : number){
+		try {
+			return await this.respuestasRepo.findAll({
+				where: { idRefServicio },
+				include: { model: Pregunta }
+			})
+		} catch (error) {
+			console.log(error);
+			return error;
+		}
+	}
+
+	findOne(id: number) {
+		return `This action returns a #${id} encuesta`;
+	}
+
+	update(id: number, updatePreguntaDto: UpdatePreguntaDto) {
+		return `This action updates a #${id} encuesta`;
+	}
+
+	remove(id: number) {
+		return `This action removes a #${id} encuesta`;
+	}
 }

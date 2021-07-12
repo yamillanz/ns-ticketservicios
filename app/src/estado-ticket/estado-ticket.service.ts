@@ -92,7 +92,7 @@ export class EstadoTicketService {
 	}
 
 	findEstadosHisRecibidos() {
-		return this.estadoRepo.findAll({ where: { idEstadoTicket: { [Op.between]: [6, 9] } } })
+		return this.estadoRepo.findAll({ where: { idEstadoTicket: { [Op.between]: [6, 9] } } });
 	}
 	update(id: number, updateEstadoTicketDto: UpdateEstadoTicketDto) {
 		return `This action updates a #${id} estadoTicket`;
