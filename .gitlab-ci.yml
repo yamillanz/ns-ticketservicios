@@ -14,7 +14,7 @@ install_dependencies:
     timeout: 180m
     stage: dependencias
     script:
-        - time yarn
+        - yarn
     artifacts:
         paths:
             - node_modules/
