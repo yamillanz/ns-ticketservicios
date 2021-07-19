@@ -1,0 +1,76 @@
+image: node:12
+
+stages:
+    - dependencias
+    - build
+    - containerization
+    - deploy
+
+cache:
+    paths:
+        - node_modules/
+
+install_dependencies:
+    stage: dependencias
+    script:
+        - npm install
+    artifacts:
+        paths:
+            - node_modules/
+
+build:
+    stage: build
+    script:
+        - docker build -t $BUILD_TAG .
+
+register_image:
+    stage: containerization
+    variables:
+        SHA: $CI_COMMIT_SHORT_SHA
+    script:
+        - docker tag $BUILD_TAG $DOCKER_SERVER/$BUILD_TAG:$SHA
+        - docker tag $BUILD_TAG $DOCKER_SERVER/$BUILD_TAG:latest
+        - docker push $DOCKER_SERVER/$BUILD_TAG:$SHA
+        - docker push $DOCKER_SERVER/$BUILD_TAG:latest
+    only:
+        - master
+
+deploy_to_desarrollo:
+    stage: deploy
+    variables:
+        MYSQL_SERVER: $DESA_MYSQL_SERVER
+        MYSQL_USER: $DESA_MYSQL_USER
+        MYSQL_PW: $DESA_MYSQL_PASS
+        MYSQL_DB: $DESA_MYSQL_DB
+        MYSQL_PORT: $DESA_MYSQL_PORT
+        APP_PORT: $APP_PORT
+        DEPLOY_TAG: $BUILD_TAG
+    script:
+        - echo $DEPLOY_TAG
+        - docker-compose down
+        - docker-compose up -d 
+    only:
+        - desarrollo
+    tags:
+        - desarrollo
+
+deploy_to_prod:
+    stage: deploy
+    variables:
+        MYSQL_SERVER: $PROD_MYSQL_SERVER
+        MYSQL_USER: $DESA_MYSQL_USER
+        MYSQL_PW: $DESA_MYSQL_PASS
+        MYSQL_DB: $DESA_MYSQL_DB
+        MYSQL_PORT: $DESA_MYSQL_PORT
+        APP_PORT: $APP_PORT
+        DEPLOY_TAG: $DOCKER_SERVER/$BUILD_TAG:latest
+    script:
+        - echo $DEPLOY_TAG
+        - docker pull $DEPLOY_TAG
+        - docker-compose down
+        - docker-compose up -d
+    only:
+        - master
+    when: manual
+    tags:
+        - master
