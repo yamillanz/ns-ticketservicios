@@ -59,7 +59,7 @@ export class TicketService {
 		// return `This action returns all ticket`;
 	}
 
-	async findOne(id: number): Promise<CreateTicketDto> {
+	async findOne(id: number): Promise<Ticket> {
 		try {
 			// return await this.ticketRepo.findAll<Ticket>({include: [TrazaTicket]});
 			return (await this.ticketRepo.findOne<Ticket>({ where: { idTicketServicio: id } }));

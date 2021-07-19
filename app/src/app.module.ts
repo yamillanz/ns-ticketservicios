@@ -1,3 +1,4 @@
+import { Comentario } from './comentarios/entities/comentario.entity';
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
@@ -26,11 +27,11 @@ import { Respuesta } from './encuesta/entities/respuesta.entity';
 			useFactory: () => ({
 				dialect: 'mysql',
 				host: process.env.MYSQL_SERVER,
-				port: 3306,
+				port: +process.env.MYSQL_PORT,
 				username: process.env.MYSQL_USER,
 				password: process.env.MYSQL_PW,
-				database: 'intranet',
-				models: [Ticket, TrazaTicket, EstadoTicket, FilesTicket, Pregunta, Respuesta],
+				database: process.env.MYSQL_DB, //'intranet',
+				models: [Ticket, TrazaTicket, EstadoTicket, FilesTicket, Pregunta, Respuesta, Comentario],
 			}),
 			// models: [Ticket, TrazaTicket, EstadoTicket, FilesTicket],
 			//autoLoadModels: true,

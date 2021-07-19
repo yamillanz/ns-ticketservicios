@@ -7,12 +7,18 @@ import { TrazaTicketModule } from './../traza-ticket/traza-ticket.module';
 import { Ticket } from './entities/ticket.entity';
 import { TicketService } from './ticket.service';
 import { TicketController } from './ticket.controller';
-import { TrazaTicketService } from 'src/traza-ticket/traza-ticket.service';
+// import { TrazaTicketService } from 'src/traza-ticket/traza-ticket.service';
 
 @Module({
-	imports: [TrazaTicketModule, EstadoTicketModule, SequelizeModule.forFeature([Ticket]), HttpModule ],
+	imports: [
+		TrazaTicketModule,
+		EstadoTicketModule,
+		SequelizeModule.forFeature([Ticket]),
+		HttpModule
+	],
 	// imports: [], NO funciona
 	controllers: [TicketController],
 	providers: [TicketService,],
+	exports: [TicketService]
 })
 export class TicketModule { }

@@ -7,7 +7,11 @@ import { TrazaTicketService } from './traza-ticket.service';
 import { TrazaTicketController } from './traza-ticket.controller';
 
 @Module({
-	imports: [SequelizeModule.forFeature([TrazaTicket]), HttpModule, forwardRef(() => EstadoTicketModule)],
+	imports: [
+		SequelizeModule.forFeature([TrazaTicket]),
+		HttpModule,
+		forwardRef(() => EstadoTicketModule)
+	],
 	controllers: [TrazaTicketController],
 	providers: [TrazaTicketService],
 	exports: [TrazaTicketService]

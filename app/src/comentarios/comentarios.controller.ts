@@ -1,34 +1,41 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
 import { ComentariosService } from './comentarios.service';
 import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
 
-@Controller('comentarios')
+@Controller('api/comentarios')
 export class ComentariosController {
-  constructor(private readonly comentariosService: ComentariosService) {}
+	private readonly log: Logger = new Logger('comentarios');
+	constructor(private readonly comentariosService: ComentariosService) { }
 
-  @Post()
-  create(@Body() createComentarioDto: CreateComentarioDto) {
-    return this.comentariosService.create(createComentarioDto);
-  }
+	@Post()
+	create(@Body() createComentarioDto: CreateComentarioDto) {
+		return this.comentariosService.create(createComentarioDto);
+	}
 
-  @Get()
-  findAll() {
-    return this.comentariosService.findAll();
-  }
+	@Get()
+	findAll() {
+		return this.comentariosService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.comentariosService.findOne(+id);
-  }
+	@Get('tickets/:idTicketServicio')
+	findAlltickets(@Param('idTicketServicio') idticket: string) {
+		this.log.debug(`comentarios del ticket ${idticket}`);
+		return this.comentariosService.findAllPorTicket(+idticket);
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateComentarioDto: UpdateComentarioDto) {
-    return this.comentariosService.update(+id, updateComentarioDto);
-  }
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.comentariosService.findOne(+id);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.comentariosService.remove(+id);
-  }
+	@Patch(':id')
+	update(@Param('id') id: string, @Body() updateComentarioDto: UpdateComentarioDto) {
+		return this.comentariosService.update(+id, updateComentarioDto);
+	}
+
+	@Delete(':id')
+	remove(@Param('id') id: string) {
+		return this.comentariosService.remove(+id);
+	}
 }
