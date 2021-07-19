@@ -11,14 +11,16 @@ cache:
         - node_modules/
 
 install_dependencies:
+    timeout: 180m
     stage: dependencias
     script:
-        - npm install
+        - time yarn
     artifacts:
         paths:
             - node_modules/
 
 build:
+    timeout: 180m
     stage: build
     script:
         - docker build -t $BUILD_TAG .
