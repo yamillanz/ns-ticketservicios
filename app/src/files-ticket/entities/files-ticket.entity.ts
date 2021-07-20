@@ -3,7 +3,7 @@ import { AutoIncrement, Column, CreatedAt, Default, PrimaryKey, Table, UpdatedAt
 @Table({
 	tableName: `ts_imgs_ticket_servicio`
 })
-export class FilesTicket extends Model<FilesTicket> {
+export class FilesTicket extends Model {
 	@PrimaryKey
 	@AutoIncrement
 	@Column

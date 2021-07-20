@@ -4,7 +4,7 @@ import { AutoIncrement, Column, CreatedAt, Default, PrimaryKey, Table, UpdatedAt
 @Table({
     tableName: `gen_preguntas_gerencias`
 })
-export class Pregunta extends Model<Pregunta>{
+export class Pregunta extends Model{
     @PrimaryKey
     @AutoIncrement
     @Column

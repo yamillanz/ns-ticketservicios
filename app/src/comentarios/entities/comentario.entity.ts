@@ -4,7 +4,7 @@ import { AutoIncrement, BelongsTo, Column, CreatedAt, Default, ForeignKey, Model
 @Table({
 	tableName: `comentarios_ts`
 })
-export class Comentario extends Model<Comentario>{
+export class Comentario extends Model{
 	@PrimaryKey
 	@AutoIncrement
 	@Column

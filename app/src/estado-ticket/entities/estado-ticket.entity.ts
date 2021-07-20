@@ -5,7 +5,7 @@ import {AutoIncrement, Column, CreatedAt, Default, PrimaryKey, Table, UpdatedAt,
 @Table({
     tableName: `ts_estados_ticket`
 })
-export class EstadoTicket extends Model<EstadoTicket> {
+export class EstadoTicket extends Model {
     @AutoIncrement
     @PrimaryKey
     @Column

@@ -6,7 +6,7 @@ import { AutoIncrement, Column, PrimaryKey, CreatedAt, UpdatedAt, Model, Foreign
 @Table({
     tableName: 'ts_traza_ticket_servicio'
 })
-export class TrazaTicket extends Model<TrazaTicket>{
+export class TrazaTicket extends Model{
     
     
     @AutoIncrement

@@ -6,40 +6,40 @@ import { AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, Default, Ha
 @Table({
 	tableName: 'ts_ticket_servicio'
 })
-export class Ticket extends Model<Ticket>{
+export class Ticket extends Model {
 	@PrimaryKey
 	@AutoIncrement
 	@Column
 	idTicketServicio?: number;
-	
+
 	@CreatedAt
 	@Column
 	fechaAlta?: Date;
-	
+
 	@UpdatedAt
-	updateAt?:  Date;
-	
+	updateAt?: Date;
+
 	@Column
 	descripcion: string;
-	
+
 	@Column
 	fechaRequerida: Date;
-	
+
 	@Column
 	fechaEstimada: Date;
-	
+
 	@Column
 	idEstadoActual: number;
-	
+
 	@Column
 	estadoActual: string;
-	
+
 	@Column
 	fechaEstadoActual?: Date;
-	
+
 	@Column
 	justificacionEstadoActual: string;
-	
+
 	@Column
 	idGerenciaOrigen: number;
 	@Column
@@ -53,7 +53,7 @@ export class Ticket extends Model<Ticket>{
 	@Column
 	idSegUsuarioOrigen: number;
 
-	
+
 
 	@Column
 	idSegUsuarioAsignado?: number;
@@ -63,9 +63,9 @@ export class Ticket extends Model<Ticket>{
 	@Default(1)
 	@Column
 	estatus: number
-	
+
 
 	@HasMany(() => TrazaTicket)
-	trazas : TrazaTicket[];
+	trazas: TrazaTicket[];
 
 }

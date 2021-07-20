@@ -6,7 +6,7 @@ import { Pregunta } from './pregunta.entity';
 @Table({
     tableName: `gen_respuestas_valoracion`
 })
-export class Respuesta extends Model<Respuesta>{
+export class Respuesta extends Model{
     @PrimaryKey
 	@AutoIncrement
 	@Column
