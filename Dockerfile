@@ -2,9 +2,7 @@
 FROM node:12 as builder
 WORKDIR /app
 COPY ./app/ /app/
-RUN yarn 
-RUN npm run build 
-#RUN npm install && npm run build 
+RUN npm install && npm run build 
 #una vez que se compila se crea el contenedor definitivo
 #FROM node:alpine 
 FROM gcr.io/distroless/nodejs 
