@@ -10,7 +10,7 @@ import { ModelCtor } from 'sequelize-typescript';
 export class FilesTicketService {
 	constructor(
 		@InjectModel(FilesTicket)
-		private readonly fileTicketRepo: ModelCtor<FilesTicket>, //typeof FilesTicket
+		private readonly fileTicketRepo: typeof FilesTicket, // ModelCtor<FilesTicket>, //
 
 	) { }
 

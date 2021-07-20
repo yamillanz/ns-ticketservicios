@@ -13,7 +13,7 @@ export class TrazaTicketService {
 	private readonly URL_usuarios: string = process.env.URL_BACKEND;
 
 	constructor(
-		@InjectModel(TrazaTicket) private readonly trazaRepo: ModelCtor<TrazaTicket>, //typeof TrazaTicket,
+		@InjectModel(TrazaTicket) private readonly trazaRepo: typeof TrazaTicket, //ModelCtor<TrazaTicket>, //,
 		@Inject(forwardRef(() => EstadoTicketService)) private readonly svrEstadoTicket: EstadoTicketService,
 		// private readonly svrEstadoTicket: EstadoTicketService,
 		private readonly http: HttpService

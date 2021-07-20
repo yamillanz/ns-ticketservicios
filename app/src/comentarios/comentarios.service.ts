@@ -14,7 +14,7 @@ export class ComentariosService {
 
 	constructor(
 		// @InjectModel(Comentario) private readonly comentarioRepo: typeof Comentario,
-		@Inject('COMENTARIO_REPOSITORY') private comentarioRepo: ModelCtor<Comentario>, //typeof Comentario,
+		@Inject('COMENTARIO_REPOSITORY') private comentarioRepo: typeof Comentario, //ModelCtor<Comentario>, //typeof Comentario,
 		@Inject(forwardRef(() => TicketService)) private readonly svrTicket: TicketService,
 
 		private readonly http: HttpService 

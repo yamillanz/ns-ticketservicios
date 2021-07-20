@@ -20,7 +20,7 @@ export class TicketService {
 
 	constructor(
 		@InjectModel(Ticket)
-		private readonly ticketRepo: ModelCtor<Ticket>, //typeof Ticket,
+		private readonly ticketRepo: typeof Ticket, //ModelCtor<Ticket>, //,
 
 		private readonly srvTrazas: TrazaTicketService,
 		private readonly srvEstados: EstadoTicketService,

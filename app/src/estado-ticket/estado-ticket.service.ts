@@ -12,7 +12,7 @@ import { ModelCtor } from 'sequelize-typescript';
 @Injectable()
 export class EstadoTicketService {
 	constructor(
-		@InjectModel(EstadoTicket) private readonly estadoRepo: ModelCtor<EstadoTicket>, //typeof EstadoTicket,
+		@InjectModel(EstadoTicket) private readonly estadoRepo: typeof EstadoTicket, //ModelCtor<EstadoTicket>, //,
 		@Inject(forwardRef(() => TrazaTicketService)) private readonly svrTraza: TrazaTicketService
 		// private readonly svrTraza: TrazaTicketService
 	) { }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreatePreguntaDto } from './dto/create-pregunta.dto';
 import { UpdatePreguntaDto } from './dto/update-pregunta.dto';
 import { CreateRespuestaDto } from './dto/create-respuesta.dto';
-import { UpdateRespuestaDto } from './dto/update-respuesta.dto';
+// import { UpdateRespuestaDto } from './dto/update-respuesta.dto';
 import { Pregunta } from './entities/pregunta.entity';
 import { Respuesta } from './entities/respuesta.entity';
 import { InjectModel } from '@nestjs/sequelize';
@@ -12,8 +12,8 @@ import { ModelCtor } from 'sequelize-typescript';
 export class EncuestaService {
 	//@InjectModel(TrazaTicket) private readonly trazaRepo: typeof TrazaTicket
 	constructor(
-		@InjectModel(Pregunta) private readonly preguntasRepo: ModelCtor<Pregunta>, //typeof Pregunta,
-		@InjectModel(Respuesta) private readonly respuestasRepo: ModelCtor<Respuesta>, //typeof Respuesta
+		@InjectModel(Pregunta) private readonly preguntasRepo: typeof Pregunta, //ModelCtor<Pregunta>, //
+		@InjectModel(Respuesta) private readonly respuestasRepo: typeof Respuesta, //ModelCtor<Respuesta>, //
 	) { }
 
 	createPregunta(createPregunstaDto: CreatePreguntaDto) {
