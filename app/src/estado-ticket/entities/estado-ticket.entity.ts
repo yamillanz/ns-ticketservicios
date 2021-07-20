@@ -1,5 +1,5 @@
 import { TrazaTicket } from './../../traza-ticket/entities/traza-ticket.entity';
-import {AutoIncrement, Column, CreatedAt, Default, PrimaryKey, Table, UpdatedAt, Model, BelongsTo} from "sequelize-typescript"
+import {AutoIncrement, Column, CreatedAt, Default, PrimaryKey, Table, UpdatedAt, Model, BelongsTo, ModelCtor} from "sequelize-typescript"
 
 
 @Table({

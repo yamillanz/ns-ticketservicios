@@ -12,6 +12,7 @@ import { TicketDto } from './dto/ticket.dto';
 
 import { EstadoTicketService } from './../estado-ticket/estado-ticket.service';
 import { TrazaTicketService } from 'src/traza-ticket/traza-ticket.service';
+import { ModelCtor } from 'sequelize-typescript';
 
 @Injectable()
 export class TicketService {
@@ -19,7 +20,7 @@ export class TicketService {
 
 	constructor(
 		@InjectModel(Ticket)
-		private readonly ticketRepo: typeof Ticket,
+		private readonly ticketRepo: ModelCtor<Ticket>, //typeof Ticket,
 
 		private readonly srvTrazas: TrazaTicketService,
 		private readonly srvEstados: EstadoTicketService,

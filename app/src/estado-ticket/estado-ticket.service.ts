@@ -7,11 +7,12 @@ import { InjectModel } from '@nestjs/sequelize';
 import { TrazaTicketService } from 'src/traza-ticket/traza-ticket.service';
 import { Inject } from '@nestjs/common';
 import { Op } from 'sequelize';
+import { ModelCtor } from 'sequelize-typescript';
 
 @Injectable()
 export class EstadoTicketService {
 	constructor(
-		@InjectModel(EstadoTicket) private readonly estadoRepo: typeof EstadoTicket,
+		@InjectModel(EstadoTicket) private readonly estadoRepo: ModelCtor<EstadoTicket>, //typeof EstadoTicket,
 		@Inject(forwardRef(() => TrazaTicketService)) private readonly svrTraza: TrazaTicketService
 		// private readonly svrTraza: TrazaTicketService
 	) { }

@@ -6,18 +6,18 @@ import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { HttpService } from '@nestjs/common/http';
-import config from './config.constants';
 import { NotFoundException } from '@nestjs/common/exceptions';
+import { ModelCtor } from 'sequelize-typescript';
 
 @Injectable()
 export class ComentariosService {
 
 	constructor(
 		// @InjectModel(Comentario) private readonly comentarioRepo: typeof Comentario,
-		@Inject('COMENTARIO_REPOSITORY') private comentarioRepo: typeof Comentario,
+		@Inject('COMENTARIO_REPOSITORY') private comentarioRepo: ModelCtor<Comentario>, //typeof Comentario,
 		@Inject(forwardRef(() => TicketService)) private readonly svrTicket: TicketService,
 
-		private readonly http: HttpService
+		private readonly http: HttpService 
 	) { }
 
 	async create(createComentarioDto: CreateComentarioDto) {

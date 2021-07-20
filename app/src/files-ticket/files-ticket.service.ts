@@ -4,12 +4,13 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateFilesTicketDto } from './dto/create-files-ticket.dto';
 import { UpdateFilesTicketDto } from './dto/update-files-ticket.dto';
 import { where } from 'sequelize';
+import { ModelCtor } from 'sequelize-typescript';
 
 @Injectable()
 export class FilesTicketService {
 	constructor(
 		@InjectModel(FilesTicket)
-		private readonly fileTicketRepo: typeof FilesTicket
+		private readonly fileTicketRepo: ModelCtor<FilesTicket>, //typeof FilesTicket
 
 	) { }
 

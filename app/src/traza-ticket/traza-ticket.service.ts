@@ -6,13 +6,14 @@ import { CreateTrazaTicketDto } from './dto/create-traza-ticket.dto';
 import { UpdateTrazaTicketDto } from './dto/update-traza-ticket.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { TrazaTicketDto } from './dto/traza-ticket.dto';
+import { ModelCtor } from 'sequelize-typescript';
 
 @Injectable()
 export class TrazaTicketService {
 	private readonly URL_usuarios: string = process.env.URL_BACKEND;
 
 	constructor(
-		@InjectModel(TrazaTicket) private readonly trazaRepo: typeof TrazaTicket,
+		@InjectModel(TrazaTicket) private readonly trazaRepo: ModelCtor<TrazaTicket>, //typeof TrazaTicket,
 		@Inject(forwardRef(() => EstadoTicketService)) private readonly svrEstadoTicket: EstadoTicketService,
 		// private readonly svrEstadoTicket: EstadoTicketService,
 		private readonly http: HttpService
