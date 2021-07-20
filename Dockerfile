@@ -3,9 +3,9 @@ FROM node:12 as builder
 WORKDIR /app
 COPY ./app/ /app/
 RUN npm install && npm run build 
-
 #una vez que se compila se crea el contenedor definitivo
-FROM node:12
+#FROM node:alpine 
+FROM gcr.io/distroless/nodejs 
 WORKDIR /app
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json .

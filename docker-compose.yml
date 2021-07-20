@@ -2,16 +2,16 @@
 version: "3.3"
 
 services:
-    node-compras:
-        build: 
-            context: .
-        
-        container_name: $CI_PROJECT_NAME
+    node-ticketservicios:
+        image: $DEPLOY_TAG
+        container_name: $BUILD_TAG
         restart: always
         ports:   
             - $APP_PORT:$APP_PORT
         networks:
             - webnet            
+        volumes: 
+            - subidos:/uploads
         environment:
             - MYSQL_SERVER=$MYSQL_SERVER
             - MYSQL_PORT=$MYSQL_PORT
@@ -19,10 +19,11 @@ services:
             - MYSQL_USER=$MYSQL_USER
             - MYSQL_PW=$MYSQL_PW
             # si se necesita trabajar con la base de datos local solo cambiar el valor de la variable DEPLOYMENT, no borrarla
-            - DEPLOYMENT=dev
             - APP_PORT=$APP_PORT
-        working_dir: /app
-        command: bash -c "npm start"
-    
+
+    volumes:
+        subidos:
+            external: true
+                
 networks:
     webnet:            
