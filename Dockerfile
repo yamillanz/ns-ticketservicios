@@ -11,6 +11,7 @@ RUN yarn build
 
 #una vez que se compila se crea el contenedor definitivo
 FROM node:14-alpine 
+#FROM node:14-slim
 #FROM gcr.io/distroless/nodejs 
 WORKDIR /app
 COPY ./app/package*.json /app/
