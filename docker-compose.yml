@@ -11,7 +11,7 @@ services:
         networks:
             - webnet            
         volumes: 
-            - subidos:/uploads
+            - subidos:/app/uploads
         environment:
             - MYSQL_SERVER=$MYSQL_SERVER
             - MYSQL_PORT=$MYSQL_PORT
