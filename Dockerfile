@@ -2,7 +2,7 @@
 FROM node:14 as builder
 WORKDIR /app
 COPY ./app/package*.json /app/
-COPY ./app/yarn.lock /app/
+# COPY ./app/yarn.lock /app/
 RUN npm install -g rimraf
 #RUN npm install --only=development
 RUN yarn 
@@ -14,7 +14,7 @@ FROM node:14-alpine
 #FROM gcr.io/distroless/nodejs 
 WORKDIR /app
 COPY ./app/package*.json /app/
-COPY ./app/yarn.lock /app/
+# COPY ./app/yarn.lock /app/
 COPY --from=builder /app/dist ./dist
 #RUN npm install --only=production
 RUN yarn install --production
