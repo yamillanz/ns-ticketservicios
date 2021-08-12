@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
+import { LastCommentParams } from './dto/last-comments.params';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, HttpException } from '@nestjs/common';
 import { ComentariosService } from './comentarios.service';
 import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
@@ -27,6 +28,12 @@ export class ComentariosController {
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.comentariosService.findOne(+id);
+	}
+
+	@Get('lastcomment/user/:idSegUsuario/:idTicketServicio')
+	findLastCommentUser(@Param() params: LastCommentParams/*  @Param('idTicketServicio') idTicketServicio: number */) {
+		this.log.debug(`ultimo comentario user ${params}`);
+		return this.comentariosService.findLastCommentUser(+params.idSegUsuario, params.idTicketServicio);
 	}
 
 	@Patch(':id')

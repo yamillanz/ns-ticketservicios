@@ -4,10 +4,8 @@ import { Comentario } from './entities/comentario.entity';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
-import { InjectModel } from '@nestjs/sequelize';
 import { HttpService } from '@nestjs/common/http';
 import { NotFoundException } from '@nestjs/common/exceptions';
-import { ModelCtor } from 'sequelize-typescript';
 
 @Injectable()
 export class ComentariosService {
@@ -17,7 +15,7 @@ export class ComentariosService {
 		@Inject('COMENTARIO_REPOSITORY') private comentarioRepo: typeof Comentario, //ModelCtor<Comentario>, //typeof Comentario,
 		@Inject(forwardRef(() => TicketService)) private readonly svrTicket: TicketService,
 
-		private readonly http: HttpService 
+		private readonly http: HttpService
 	) { }
 
 	async create(createComentarioDto: CreateComentarioDto) {
@@ -40,11 +38,16 @@ export class ComentariosService {
 
 	async findAllPorTicket(idTicketServicio: number) {
 		try {
-			const ticket :Ticket = await this.svrTicket.findOne(idTicketServicio);
-			if(!ticket) {
+			const ticket: Ticket = await this.svrTicket.findOne(idTicketServicio);
+			if (!ticket) {
 				throw new NotFoundException('Ticket not exist!');
 			}
-			let comentarios: Comentario[] = await this.comentarioRepo.findAll({ where: { idReferencia: idTicketServicio }, include: [Ticket] });
+			let comentarios: Comentario[] = await this.comentarioRepo.findAll({
+				where: { idReferencia: idTicketServicio },
+				order: [['fechaAlta', 'DESC']],
+				include: [Ticket]
+			}
+			);
 			let commetsTickets: CreateComentarioDto[] = [];
 			for (const comment of comentarios) {
 				let commentAdded: CreateComentarioDto = Object.assign({}, comment.toJSON());
@@ -58,6 +61,15 @@ export class ComentariosService {
 			return error;
 		}
 
+	}
+
+	async findLastCommentUser(idSegUsuario: number, idTicketServicio: number) {
+		return await this.comentarioRepo.findOne<Comentario>(
+			{
+				where: { idSegUsuario, idReferencia: idTicketServicio },
+				order: [['fechaAlta', 'DESC']]
+			}
+		);
 	}
 
 	findOne(id: number) {

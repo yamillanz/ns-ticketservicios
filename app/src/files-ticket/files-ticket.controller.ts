@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, UseInterceptors, UploadedFiles, Res  } from '@nestjs/common';
 import { FilesTicketService } from './files-ticket.service';
 import { CreateFilesTicketDto } from './dto/create-files-ticket.dto';
 import { UpdateFilesTicketDto } from './dto/update-files-ticket.dto';
 import { FilesInterceptor } from '@nestjs/platform-express/multer';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { extname, join } from 'path';
+import { createReadStream } from 'fs';
+import { Response } from 'express';
 
 @Controller('api/files-ticket')
 export class FilesTicketController {
@@ -77,6 +79,20 @@ export class FilesTicketController {
 	}
 	//------------------------
 
+	//8c2c1013848f26bc22eae211091f171e74.pdf
+	//Get a File
+	@Get('files/:idTicket')
+	getFiles(@Param('id') id: string, @Res() res :Response ) {
+		this.log.log(`obteniendo el archivo`);
+		const file = createReadStream(join(process.cwd(), './uploads/8c2c1013848f26bc22eae211091f171e74.pdf'));
+		file.pipe(res);
+		// res.
+		// file.pipe(res);
+		// file;
+		// return new StreamableFile(file); // solo en fastify
+	}
+
+	//------------------------------
 
 	@Patch(':id')
 	update(@Param('id') id: string, @Body() updateFilesTicketDto: UpdateFilesTicketDto) {
