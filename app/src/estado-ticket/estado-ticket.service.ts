@@ -7,13 +7,14 @@ import { InjectModel } from '@nestjs/sequelize';
 import { TrazaTicketService } from 'src/traza-ticket/traza-ticket.service';
 import { Inject } from '@nestjs/common';
 import { Op } from 'sequelize';
-import { ModelCtor } from 'sequelize-typescript';
+import { HttpService } from '@nestjs/common/http';
 
 @Injectable()
 export class EstadoTicketService {
 	constructor(
 		@InjectModel(EstadoTicket) private readonly estadoRepo: typeof EstadoTicket, //ModelCtor<EstadoTicket>, //,
-		@Inject(forwardRef(() => TrazaTicketService)) private readonly svrTraza: TrazaTicketService
+		@Inject(forwardRef(() => TrazaTicketService)) private readonly svrTraza: TrazaTicketService,
+		private readonly http: HttpService
 		// private readonly svrTraza: TrazaTicketService
 	) { }
 
@@ -73,7 +74,10 @@ export class EstadoTicketService {
 				orden: { [Op.or]: [ultimoEstado.orden + 1] }
 			}
 		});
-
+		///api/solpedticket/{idTicket}
+		const solped = this.http.get(process.env.URL_SOLPED + `solpedticket/${idTicketServicio}`);
+		console.log(solped);
+		
 		if (aprobado === 0) {
 			return estadossiguientes
 		}
