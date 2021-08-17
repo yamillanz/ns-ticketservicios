@@ -8,6 +8,7 @@ import { TrazaTicketService } from 'src/traza-ticket/traza-ticket.service';
 import { Inject } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { HttpService } from '@nestjs/common/http';
+import Solped from './entities/solped.model';
 
 @Injectable()
 export class EstadoTicketService {
@@ -74,10 +75,18 @@ export class EstadoTicketService {
 				orden: { [Op.or]: [ultimoEstado.orden + 1] }
 			}
 		});
+
 		///api/solpedticket/{idTicket}
-		const solped = this.http.get(process.env.URL_SOLPED + `solpedticket/${idTicketServicio}`);
-		console.log(solped);
-		
+		const solped : Solped = (await this.http.get(process.env.URL_SOLPED + `solpedticket/v2/${idTicketServicio}`).toPromise()).data[0];
+		// console.log(solped);
+		// if (!empty($solped) && ($solped[0]->idEstadoActual > 3 && $solped[0]->idEstadoActual < 13 )) {
+        //     echo json_encode($ultimo_estado);
+        //     return true;
+        // }
+		if(solped && (solped.idEstadoActual > 3 && solped.idEstadoActual < 13)) {			
+			return [ultimoEstado];
+		}
+
 		if (aprobado === 0) {
 			return estadossiguientes
 		}
