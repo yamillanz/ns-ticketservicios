@@ -11,7 +11,7 @@ services:
         networks:
             - webnet            
         volumes: 
-            - subidos:/uploads
+            - subidos:/app/uploads
         environment:
             - MYSQL_SERVER=$MYSQL_SERVER
             - MYSQL_PORT=$MYSQL_PORT
@@ -21,9 +21,9 @@ services:
             # si se necesita trabajar con la base de datos local solo cambiar el valor de la variable DEPLOYMENT, no borrarla
             - APP_PORT=$APP_PORT
 
-    volumes:
-        subidos:
-            external: true
+volumes:
+    subidos:
+        external: true
                 
 networks:
     webnet:            
