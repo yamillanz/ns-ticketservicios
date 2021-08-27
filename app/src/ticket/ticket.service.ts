@@ -152,7 +152,7 @@ export class TicketService {
                 newdto.tipo_servicio = (
                     await this.http
                         .get(
-                            `${this.URL_BACKCONFIG}config/serviciosgerencias/${ticket.idServiciosGerencias}`,
+                            `${this.URL_BACKCONFIG}config/gerencias/serviciosgerencias/${ticket.idServiciosGerencias}`,
                         )
                         .toPromise()
                 ).data[0].nombre;
@@ -207,7 +207,7 @@ export class TicketService {
                 newdto.tipo_servicio = (
                     await this.http
                         .get(
-                            `${this.URL_BACKCONFIG}config/serviciosgerencias/${ticket.idServiciosGerencias}`,
+                            `${this.URL_BACKCONFIG}config/gerencias/serviciosgerencias/${ticket.idServiciosGerencias}`,
                         )
                         .toPromise()
                 ).data[0].nombre;
@@ -246,7 +246,7 @@ export class TicketService {
             dtoticket.tipo_servicio = (
                 await this.http
                     .get(
-                        `${this.URL_BACKCONFIG}config/serviciosgerencias/${ticket.idServiciosGerencias}`,
+                        `${this.URL_BACKCONFIG}config/gerencias/serviciosgerencias/${ticket.idServiciosGerencias}`,
                     )
                     .toPromise()
             ).data[0].nombre;
@@ -276,7 +276,7 @@ export class TicketService {
             dtoticket.tipo_servicio = (
                 await this.http
                     .get(
-                        `${this.URL_BACKCONFIG}config/serviciosgerencias/${ticket.idServiciosGerencias}`,
+                        `${this.URL_BACKCONFIG}config/gerencias/serviciosgerencias/${ticket.idServiciosGerencias}`,
                     )
                     .toPromise()
             ).data[0].nombre;
