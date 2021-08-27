@@ -4,17 +4,16 @@ import { IsAlphanumeric, IsBoolean, IsDate, IsEmpty, IsInt, IsNotEmpty, IsNumber
 import { CreateTicketDto } from "./create-ticket.dto";
 
 export class TicketDto extends PartialType(CreateTicketDto) {
+    @IsNumber()
+    idTicketServicio?: number;
 
-	@IsNumber()
-	idTicketServicio?: number;
+    gerenciaOrigen?: string;
+    gerenciaDestino?: string;
+    estado_actual_accion_adic?: number;
+    orden?: number;
+    orden_mod?: number;
+    tipo_servicio? : string;
 
-	gerenciaOrigen?: string;
-	gerenciaDestino?: string;
-	estado_actual_accion_adic?: number;
-	orden?: number;
-	orden_mod?: number;
-
-	trazas?: CreateTrazaTicketDto[];
-
+    trazas?: CreateTrazaTicketDto[];
 }
 
