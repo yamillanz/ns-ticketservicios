@@ -18,6 +18,9 @@ services:
             - MYSQL_DB=$MYSQL_DB
             - MYSQL_USER=$MYSQL_USER
             - MYSQL_PW=$MYSQL_PW
+            - URL_BACKEND=$URL_BACKEND
+            - URL_SOLPED=$URL_SOLPED
+            - URL_BACKCONFIG=$URL_BACKCONFIG
             # si se necesita trabajar con la base de datos local solo cambiar el valor de la variable DEPLOYMENT, no borrarla
             - APP_PORT=$APP_PORT
 
