@@ -309,7 +309,7 @@ export class TicketService {
             where: { idTicketServicio: id },
         });
         if (!updateTicket) {
-            throw new NotFoundException('Ticcket no existe');
+            throw new NotFoundException('Ticket no existe');
         }
 
         updateTicket.estatus = 0;
